@@ -136,7 +136,7 @@ Wanderlust is the ultimate social platform for travelers! Share your adventures 
   - [GitHub Cheat Sheet #2](https://drive.google.com/file/d/1OddwoSvNJ3dQuEBw3RERieMXmOicif9_/view)
 
 # Meet the Team 😄
-* Developers:
+* Developers: Dereck Babu, Dylan Dam, Raphael Ogundare, Kavyadharshini Seenuvasan
 * Project Manager: Avanthi Reddy
 * Industry Mentor: Jeshna Gupta
 
