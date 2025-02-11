@@ -20,6 +20,7 @@ Wanderlust is the ultimate social platform for travelers! Share your adventures 
 * Enhanced search options with filters for date, duration, etc.
 * Collaborative itineraries
 * Trip-planning tools section
+* Chatbot to assist with personalized inquiries 
 
 # Mapping Our Adventure: Milestones 🚀
 
