@@ -15,6 +15,7 @@ export const Auth = () => {
 	const signIn = async () => {
 		try {
 			await createUserWithEmailAndPassword(auth, email, password);
+			console.log("email login success");
 		} catch (err) {
 			console.log(err);
 		}
@@ -23,6 +24,7 @@ export const Auth = () => {
 	const signInWithGoogle = async () => {
 		try {
 			await signInWithPopup(auth, googleProvider);
+			console.log("popup login success");
 		} catch (err) {
 			console.log(err);
 		}
@@ -31,6 +33,7 @@ export const Auth = () => {
 	const logout = async () => {
 		try {
 			await signOut(auth);
+			console.log("logout success");
 		} catch (err) {
 			console.log(err);
 		}
