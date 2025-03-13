@@ -1,35 +1,58 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { useRouter } from 'expo-router'; // Import useRouter instead of useNavigation
-import GoogleIcon from '../assets/images/Google logo.png';
-import { Feather } from '@expo/vector-icons';
-
-
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from "react-native";
+import { useRouter } from "expo-router"; // Import useRouter instead of useNavigation
+import GoogleIcon from "../assets/images/Google logo.png";
+import { Feather } from "@expo/vector-icons";
+import { auth, googleProvider } from "../config/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 
 const LoginScreen = ({ setIsAuthenticated }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const signUpExistingUsers = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("email login success");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      console.log("popup login success");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const router = useRouter(); // Use router instead of navigation
 
   const handleLogin = () => {
-    if (username === 'User' && password === 'Password') {
-      setIsAuthenticated(true);
-    } else {
-      alert('Invalid credentials');
-    }
+    signUpExistingUsers();
   };
-  
+
   const handleSignUp = () => {
-    router.push('/signup');
+    router.push("/signup");
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      
+
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Email address</Text>
         <View style={styles.inputWrapper}>
@@ -41,7 +64,12 @@ const LoginScreen = ({ setIsAuthenticated }) => {
             keyboardType="email-address"
             autoCapitalize="none"
           />
-          <Feather name="check-circle" size={20} color="#666" style={styles.inputIcon} />
+          <Feather
+            name="check-circle"
+            size={20}
+            color="#666"
+            style={styles.inputIcon}
+          />
         </View>
       </View>
 
@@ -55,13 +83,20 @@ const LoginScreen = ({ setIsAuthenticated }) => {
             value={password}
             onChangeText={setPassword}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.inputIcon}>
-            <Feather name={showPassword ? "eye" : "eye-off"} size={20} color="#666" />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.inputIcon}
+          >
+            <Feather
+              name={showPassword ? "eye" : "eye-off"}
+              size={20}
+              color="#666"
+            />
           </TouchableOpacity>
         </View>
       </View>
-      
-      <TouchableOpacity onPress={() => alert('Forgot Password?')}>
+
+      <TouchableOpacity onPress={() => alert("Forgot Password?")}>
         <Text style={styles.forgotPassword}>Forgot password?</Text>
       </TouchableOpacity>
 
@@ -72,8 +107,8 @@ const LoginScreen = ({ setIsAuthenticated }) => {
       <Text style={styles.orText}>Or Login with</Text>
       <View style={styles.divider} />
 
-      <TouchableOpacity style={styles.googleButton}>
-        <Image 
+      <TouchableOpacity style={styles.googleButton} onPress={signInWithGoogle}>
+        <Image
           source={GoogleIcon}
           style={styles.googleIcon}
           resizeMode="contain"
@@ -85,25 +120,23 @@ const LoginScreen = ({ setIsAuthenticated }) => {
         <Text style={styles.signupLink}>Sign up</Text>
       </TouchableOpacity>
     </View>
-
-  
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
     padding: 50,
   },
   title: {
     fontSize: 30,
-    fontWeight: '700',
+    fontWeight: "700",
     marginBottom: 50,
   },
   inputContainer: {
-    width: '100%',
+    width: "100%",
     marginBottom: 30,
   },
   label: {
@@ -111,12 +144,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#D8DADC',
+    borderColor: "#D8DADC",
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     paddingRight: 15,
   },
   inputField: {
@@ -129,44 +162,44 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     fontSize: 14,
-    color: '#386BF6',
-    alignSelf: 'flex-end',
+    color: "#386BF6",
+    alignSelf: "flex-end",
   },
   loginButton: {
-    width: '100%',
+    width: "100%",
     padding: 17,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   loginText: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#FFFFFF',
+    fontWeight: "600",
+    color: "#FFFFFF",
   },
   orText: {
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.7)',
+    color: "rgba(0, 0, 0, 0.7)",
     marginTop: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   divider: {
-    width: '100%',
+    width: "100%",
     height: 1,
-    backgroundColor: '#D8DADC',
+    backgroundColor: "#D8DADC",
     marginVertical: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   googleButton: {
-    width: '100%',
+    width: "100%",
     padding: 18,
     borderWidth: 1,
-    borderColor: '#D8DADC',
+    borderColor: "#D8DADC",
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 10,
     height: 60,
   },
@@ -175,20 +208,20 @@ const styles = StyleSheet.create({
     height: 24,
   },
   signupContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
     marginBottom: 50,
   },
   signupText: {
     fontSize: 14,
-    color: '#666666',
+    color: "#666666",
   },
   signupLink: {
     fontSize: 14,
-    color: '#386BF6',
-    fontWeight: '700',
+    color: "#386BF6",
+    fontWeight: "700",
   },
 });
 
