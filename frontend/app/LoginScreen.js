@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,11 +12,12 @@ import GoogleIcon from "../assets/images/Google logo.png";
 import { Feather } from "@expo/vector-icons";
 import { auth, googleProvider } from "../config/firebase";
 import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import * as Google from "expo-auth-session/providers/google";
 
 const LoginScreen = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState("");
@@ -31,13 +32,24 @@ const LoginScreen = ({ setIsAuthenticated }) => {
     }
   };
 
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      console.log("popup login success");
-    } catch (err) {
-      console.log(err);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: "YOUR_EXPO_CLIENT_ID.apps.googleusercontent.com",
+    iosClientId: "YOUR_IOS_CLIENT_ID.apps.googleusercontent.com",
+    androidClientId: "YOUR_ANDROID_CLIENT_ID.apps.googleusercontent.com",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential)
+        .then(() => console.log("✅ Google Sign-In Success"))
+        .catch((error) => console.error("❌ Firebase Auth Error:", error));
     }
+  }, [response]);
+
+  const signInWithGoogle = () => {
+    promptAsync();
   };
   const router = useRouter(); // Use router instead of navigation
 

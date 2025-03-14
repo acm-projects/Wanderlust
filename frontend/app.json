@@ -1,5 +1,14 @@
 {
   "expo": {
+    "extra": {
+      "firebaseApiKey": "AIzaSyA5ZrYVRr...",
+      "firebaseAuthDomain": "wanderlust-4034a.firebaseapp.com",
+      "firebaseProjectId": "wanderlust-4034a",
+      "firebaseStorageBucket": "wanderlust-4034a.firebasestorage.app",
+      "firebaseMessagingSenderId": "154095027336",
+      "firebaseAppId": "1:154095027336:web:df03dd333eb577d7830b3d",
+      "firebaseMeasurementId": "G-LM55E24MY6"
+    },
     "name": "frontend",
     "slug": "frontend",
     "version": "1.0.0",
