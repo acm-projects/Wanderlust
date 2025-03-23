@@ -41,6 +41,8 @@ postRoutes.route("/posts").post(async (request, response) => {
     tags: request.body.tags,
     dates: request.body.dates,
     upvotes: request.body.upvotes,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
   let data = await db.collection("posts").insertOne(mongoObject);
   response.json(data);
@@ -61,6 +63,7 @@ postRoutes.route("/posts/:id").put(async (request, response) => {
       tags: request.body.tags,
       dates: request.body.dates,
       upvotes: request.body.upvotes,
+      updatedAt: new Date(),
     },
   };
   let data = await db
