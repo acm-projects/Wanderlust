@@ -10,7 +10,7 @@ import {
 import { useRouter } from "expo-router"; // Import useRouter instead of useNavigation
 import GoogleIcon from "../assets/images/Google logo.png";
 import { Feather } from "@expo/vector-icons";
-import { auth, googleProvider } from "../config/firebase";
+import { auth } from "../config/firebase";
 import {
   GoogleAuthProvider,
   signInWithCredential,
@@ -33,9 +33,10 @@ const LoginScreen = ({ setIsAuthenticated }) => {
   };
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: "YOUR_EXPO_CLIENT_ID.apps.googleusercontent.com",
-    iosClientId: "YOUR_IOS_CLIENT_ID.apps.googleusercontent.com",
-    androidClientId: "YOUR_ANDROID_CLIENT_ID.apps.googleusercontent.com",
+    expoClientId:
+      "154095027336-u41oqis137a3rl4ukah7kdiang7nurhm.apps.googleusercontent.com",
+    iosClientId:
+      "154095027336-u41oqis137a3rl4ukah7kdiang7nurhm.apps.googleusercontent.com",
   });
 
   useEffect(() => {
@@ -43,7 +44,10 @@ const LoginScreen = ({ setIsAuthenticated }) => {
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential)
-        .then(() => console.log("✅ Google Sign-In Success"))
+        .then((userCredential) => {
+          console.log("✅ Google Sign-In Success", userCredential.user);
+          setIsAuthenticated(true);
+        })
         .catch((error) => console.error("❌ Firebase Auth Error:", error));
     }
   }, [response]);
