@@ -135,7 +135,7 @@ postRoutes.route("/get/click/posts/:id").get(async (request, response) => {
 				title: 1,
 				locations: 1,
 				rating: 1,
-				pictures: 1,
+				uploads: 1,
 				saved: 1,
 				likes: 1,
 				liked: 1,
@@ -154,8 +154,8 @@ postRoutes.route("/get/click/posts/:id").get(async (request, response) => {
 	}
 });
 
-// #8 - Post One (Adding comments to post)
-postRoutes.route("/posts/:id/comments").post(async (request, response) => {
+// #8 - Post One (Adding comment to post)
+postRoutes.route("/posts/add/comment/:id").post(async (request, response) => {
 	let db = database.getDb();
 	let postId = request.params.id;
 	let newComment = request.body.comment;
@@ -182,7 +182,7 @@ postRoutes.route("/posts/:id/comments").post(async (request, response) => {
 postRoutes.route("/posts/:id/rating").post(async (request, response) => {
 	let db = database.getDb();
 	let postId = request.params.id;
-	let newRating = request.body.allRatings;
+	let newRating = request.body.rating;
 
 	if (!newRating || newRating < 1 || newRating > 5) {
 		return response
