@@ -140,7 +140,7 @@ Wanderlust is the ultimate social platform for travelers! Share your adventures 
 * Project Manager: Avanthi Reddy
 * Industry Mentor: Jeshna Gupta
 
-
+![image](https://drive.google.com/uc?export=view&id=1j927fqse0QLWL5r5JvDqLH2DKAV88gLj)
 
 
 
